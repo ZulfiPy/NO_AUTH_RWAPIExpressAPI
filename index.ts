@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import verifyJWT from "./src/middleware/verifyJWT";
 
 import tasksRouter from "./src/routes/api/tasks";
+import customersRouter from "./src/routes/api/customers";
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use(verifyJWT)
 // routes
 // API routes protected with passport.js authentication and isAuthorized custom middleware
 app.use('/api/tasks', tasksRouter);
+app.use('/api/customers', customersRouter);
 
 app.listen(port, async () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
