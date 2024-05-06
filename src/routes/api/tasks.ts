@@ -3,7 +3,7 @@ import { getTasks, getOneTaskById, getTasksByUsername, createTask, updateTaskByI
 
 const router = express.Router();
 
-// /api/tasks route protected with custom isAuthorized function 
+// /api/tasks routes
 router.get('/', getTasks);
 router.get('/:username', getTasksByUsername);
 router.get('/:username/:id', getOneTaskById);
