@@ -101,9 +101,28 @@ const updateCustomer = async (req: Request, res: Response) => {
     }
 }
 
+const deleteCustomer = async (req: Request, res: Response) => {
+    const database = process.env.PG_CUSTOMERS_DB as string;
+    await pgConn(database);
+
+    const { id } = req.params;
+
+    try {
+        const pool = getPool(database);
+
+        const deletedCustomerPool = await pool.query('DELETE FROM customers WHERE customer_id = ($1)', [id]);
+
+        return res.status(200).json({ 'message': deletedCustomerPool.rowCount === 0 ? "customer not found to be deleted" : "customer deleted" });
+    } catch (error) {
+        console.log('error occured while deleting task, error:', error);
+        return res.status(500).json({ 'message': 'something went wrong' });
+    }
+}
+
 export {
     getCustomers,
     getCustomer,
     createCustomer,
     updateCustomer,
+    deleteCustomer,
 }
