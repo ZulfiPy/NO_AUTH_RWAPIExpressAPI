@@ -18,6 +18,24 @@ const getCustomers = async (req: Request, res: Response) => {
     }
 }
 
+const getCustomer = async (req: Request, res: Response) => {
+    const database = process.env.PG_CUSTOMERS_DB as string;
+    await pgConn(database);
+
+    const { id } = req.params;
+
+    try {
+        const pool = getPool(database);
+
+        const customerPool = await pool.query('SELECT * FROM customers WHERE personal_id_number = ($1);', [id])
+
+        return res.status(200).json({ 'customer': customerPool.rowCount === 0 ? "customer not found." : customerPool.rows[0] })
+    } catch (error) {
+        console.log('error occured while reading customer', error);
+        return res.status(500).json({ 'message': 'something went wrong' });
+    }
+}
+
 const createCustomer = async (req: Request, res: Response) => {
     const database = process.env.PG_CUSTOMERS_DB as string;
     await pgConn(database);
@@ -50,5 +68,6 @@ const createCustomer = async (req: Request, res: Response) => {
 
 export {
     getCustomers,
+    getCustomer,
     createCustomer,
 }
