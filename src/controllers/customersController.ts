@@ -71,19 +71,19 @@ const updateCustomer = async (req: Request, res: Response) => {
     const database = process.env.PG_CUSTOMERS_DB as string;
     await pgConn(database);
 
-    const fieldNames = ['firstName', 'lastName', 'isEstonianResident', 'birthDate', 'driverLicenseNumber', 'address', 'phoneNumber', 'email'];
+    const fieldNames = ['firstName', 'lastName', 'isEstonianResident', 'birthDate', 'driversLicenseNumber', 'address', 'phoneNumber', 'email'];
 
     if (Object.values(req.body).length === 0) {
         return res.status(400).json({ 'message': 'body of your request is empty' });
     }
-
+    
     for (let field of fieldNames) {
         if (!req.body?.[field]) {
             return res.status(400).json({ 'message': `${field} field is empty, please provide it.` });
         }
     }
 
-    const { firstName, lastName, isEstonianResident, personalIDNumber, birthDate, driverLicenseNumber, address, phoneNumber, email } = req.body;
+    const { firstName, lastName, isEstonianResident, isikukood, birthDate, driversLicenseNumber, address, phoneNumber, email } = req.body;
 
     const { id } = req.params;
     console.log(id)
@@ -91,7 +91,7 @@ const updateCustomer = async (req: Request, res: Response) => {
     try {
         const pool = getPool(database);
 
-        const updatedCustomerPool = await pool.query('UPDATE customers SET first_name = ($1), last_name = ($2), is_estonian_resident = ($3), personal_id_number = ($4), birth_date = ($5), driver_license_number = ($6), address = ($7), phone_number = ($8), email = ($9) WHERE customer_id = ($10) RETURNING *;', [firstName, lastName, isEstonianResident, personalIDNumber, birthDate, driverLicenseNumber, address, phoneNumber, email, id]);
+        const updatedCustomerPool = await pool.query('UPDATE customers SET first_name = ($1), last_name = ($2), is_estonian_resident = ($3), personal_id_number = ($4), birth_date = ($5), driver_license_number = ($6), address = ($7), phone_number = ($8), email = ($9) WHERE customer_id = ($10) RETURNING *;', [firstName, lastName, isEstonianResident, isikukood, birthDate, driversLicenseNumber, address, phoneNumber, email, id]);
 
         console.log(updatedCustomerPool.rows[0])
 
