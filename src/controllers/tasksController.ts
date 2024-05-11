@@ -26,6 +26,7 @@ const getTasks = async (req: Request, res: Response) => {
         }
     }
 
+    return res.status(401).json({ 'message': 'provide session token' });
 }
 
 const getTasksByUsername = async (req: Request, res: Response) => {
