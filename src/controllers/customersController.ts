@@ -29,7 +29,7 @@ const getCustomer = async (req: Request, res: Response) => {
 
         const customerPool = await pool.query('SELECT * FROM customers WHERE customer_id = ($1);', [id])
 
-        return res.status(200).json({ 'customer': customerPool.rowCount === 0 ? "customer not found." : customerPool.rows[0] })
+        return res.status(200).json({ 'customer': customerPool.rowCount === 0 ? 0 : customerPool.rows[0] })
     } catch (error) {
         console.log('error occured while reading customer', error);
         return res.status(500).json({ 'message': 'something went wrong' });
