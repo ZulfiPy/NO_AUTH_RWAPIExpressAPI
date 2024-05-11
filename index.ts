@@ -8,6 +8,7 @@ import verifyJWT from "./src/middleware/verifyJWT";
 
 import tasksRouter from "./src/routes/api/tasks";
 import customersRouter from "./src/routes/api/customers";
+import vehiclesRouter from "./src/routes/api/vehicles";
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use(verifyJWT)
 // API routes protected with passport.js authentication and isAuthorized custom middleware
 app.use('/api/tasks', tasksRouter);
 app.use('/api/customers', customersRouter);
+app.use('/api/vehicles', vehiclesRouter);
 
 app.listen(port, async () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
