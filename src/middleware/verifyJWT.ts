@@ -15,7 +15,6 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
                 console.log('error occured', error);
                 return res.status(401).json({ "message": "unauthorized - expired/misused/invalid sigranutre" });
             }
-            console.log('decoded', decoded);
             next();
         }
     )
