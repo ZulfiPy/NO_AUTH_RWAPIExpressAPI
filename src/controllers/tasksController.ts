@@ -1,23 +1,31 @@
 import { Request, Response } from "express";
 import pgConn from "../config/pgDBConn";
 import { getPool } from "../config/pgDBConn";
+import jwt from "jsonwebtoken";
 
 const getTasks = async (req: Request, res: Response) => {
     const database = process.env.PG_TASKS_DB as string;
     await pgConn(database);
 
-    const username = 'ZulfugarA';
+    const decoded = jwt.decode(req?.cookies['next-auth.session-token']);
 
-    try {
-        const pool = getPool(database);
+    if (typeof decoded === 'object' && decoded !== null && 'user' in decoded) {
 
-        const tasks = await pool.query(`SELECT * FROM tasks WHERE createdby = '${username}'`);
+        const userInfo = decoded.user
+        const username = userInfo?.username
 
-        return res.status(200).json({ "tasks": tasks.rowCount === 0 ? "no tasks found. database is empty" : tasks.rows });
-    } catch (error) {
-        console.log('error occured while reading tasks:', error);
-        return res.status(500).json({ "message": "Something went wrong" });
+        try {
+            const pool = getPool(database);
+
+            const tasks = await pool.query(`SELECT * FROM tasks WHERE createdby = '${username}'`);
+
+            return res.status(200).json({ "tasks": tasks.rowCount === 0 ? 0 : tasks.rows });
+        } catch (error) {
+            console.log('error occured while reading tasks:', error);
+            return res.status(500).json({ "message": "Something went wrong" });
+        }
     }
+
 }
 
 const getTasksByUsername = async (req: Request, res: Response) => {
@@ -29,7 +37,7 @@ const getTasksByUsername = async (req: Request, res: Response) => {
 
         const tasks = await pool.query(`SELECT * FROM tasks WHERE createdby = '${req.params.username}'`);
 
-        return res.status(200).json({ "tasks": tasks.rowCount === 0 ? "no tasks found by username. database is empty" : tasks.rows });
+        return res.status(200).json({ "tasks": tasks.rowCount === 0 ? 0 : tasks.rows });
     } catch (error) {
         console.log('error occured while reading tasks by username:', error);
         return res.status(500).json({ "message": "Something went wrong" });
