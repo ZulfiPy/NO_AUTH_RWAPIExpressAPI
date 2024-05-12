@@ -97,9 +97,28 @@ const updateVehicle = async (req: Request, res: Response) => {
     }
 }
 
+const deleteVehicle = async (req: Request, res: Response) => {
+    const database = process.env.PG_VEHICLES_DB as string;
+    await pgConn(database);
+
+    const { id } = req.params;
+
+    try {
+        const pool = getPool(database);
+        
+        const deletedVehiclePool = await pool.query('DELETE FROM vehicles WHERE id = ($1);', [id])
+
+        return res.status(200).json({ 'message': deletedVehiclePool.rowCount === 0 ? 0 : "vehicle deleted" });
+    } catch (error) {
+        console.log('error occured while deleting vehicle, error:', error);
+        return res.status(500).json({ 'message': 'something went wrong' });
+    }
+}
+
 export {
     getVehicles,
     getVehicleByPlateNumber,
     createVehicle,
     updateVehicle,
+    deleteVehicle
 }
