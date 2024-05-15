@@ -1,10 +1,10 @@
 import express from "express";
-import { getVehicles, getVehicleByPlateNumber, createVehicle, updateVehicle, deleteVehicle } from "../../controllers/vehiclesController";
+import { getVehicles, getVehicleById, createVehicle, updateVehicle, deleteVehicle } from "../../controllers/vehiclesController";
 
 const router = express.Router();
 
 router.get('/', getVehicles);
-router.get('/:plateNumber', getVehicleByPlateNumber);
+router.get('/:id', getVehicleById);
 router.post('/', createVehicle);
 router.put('/:id', updateVehicle);
 router.delete('/:id', deleteVehicle)
