@@ -75,7 +75,7 @@ const updateVehicle = async (req: Request, res: Response) => {
         return res.status(400).json({ 'message': "body of your request is empty" });
     }
 
-    const fieldNames = ['vin_code', 'plate_number', 'brand', 'model', 'year', 'gearbox', 'colour'];
+    const fieldNames = ['vin_code', 'plate_number', 'brand', 'model', 'year', 'gearbox', 'colour', 'fuel_type'];
 
     for (let field of fieldNames) {
         if (!req.body?.[field]) {
@@ -83,18 +83,18 @@ const updateVehicle = async (req: Request, res: Response) => {
         }
     }
 
-    const { vin_code, plate_number, brand, model, year, gearbox, colour } = req.body;
+    const { vin_code, plate_number, brand, model, year, gearbox, colour, fuel_type } = req.body;
     const { id } = req.params;
 
     try {
         const pool = getPool(database);
 
-        const updatedVehiclePool = await pool.query('UPDATE vehicles SET vin_code = ($1), plate_number = ($2), brand = ($3), model = ($4), year = ($5), gearbox = ($6), colour = ($7) where id = ($8) RETURNING *;', [vin_code, plate_number, brand, model, year, gearbox, colour, id]);
+        const updatedVehiclePool = await pool.query('UPDATE vehicles SET vin_code = ($1), plate_number = ($2), brand = ($3), model = ($4), year = ($5), gearbox = ($6), colour = ($7), fuel_type = ($8) where id = ($9) RETURNING *;', [vin_code, plate_number, brand, model, year, gearbox, colour, fuel_type, id]);
 
         return res.status(200).json({ 'vehicle': updatedVehiclePool.rowCount === 0 ? 0 : updatedVehiclePool.rows[0] })
     } catch (error) {
         console.log('error occured while creating vehicles, error:', error);
-        return res.status(500).json({ 'message': 'something went wrong' });
+        return res.status(500).json(error);
     }
 }
 
