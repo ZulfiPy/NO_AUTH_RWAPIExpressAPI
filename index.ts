@@ -15,6 +15,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
+app.set('trust proxy', true);
 
 // set 'Access-Control-Allow-Credentials' middleware
 app.use(credentials);
@@ -26,17 +27,17 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
+    res.send('Express + TypeScript Server;');
 });
 
 // built-in middleware for json
-app.use(express.json())
+app.use(express.json());
 
 // middleware for parsin cookies
-app.use(cookieParser())
+app.use(cookieParser());
 
 // jwt verify middleware
-app.use(verifyJWT)
+app.use(verifyJWT);
 
 // routes
 // API routes protected with passport.js authentication and isAuthorized custom middleware
