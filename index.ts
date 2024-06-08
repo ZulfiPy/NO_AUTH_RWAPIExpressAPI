@@ -45,7 +45,6 @@ app.use('/api/tasks', tasksRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/vehicles', vehiclesRouter);
 
-// run this only locally
-// app.listen(port, async () => {
-//     console.log(`[server]: Server is running at http://localhost:${port}`);
-// });
+app.listen(port, async () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+});
