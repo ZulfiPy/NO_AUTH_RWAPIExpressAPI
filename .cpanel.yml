@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/rwrentee/repositories/NO_AUTH_RWAPIExpressAPI/
-    - /bin/cp -R NO_AUTH_RWAPIExpressAPI $DEPLOYPATH
+    - /bin/cp -R /home/rwrentee/repositories/NO_AUTH_RWAPIExpressAPI/ $DEPLOYPATH
