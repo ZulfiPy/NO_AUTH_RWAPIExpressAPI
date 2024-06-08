@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server; RW-Rent API developed by Zulfugar A. LinkedIn: https://www.linkedin.com/in/zulfugar-abdullayev-310b8b274/');
+    res.send('Express + TypeScript Server; RW-Rent API;');
 });
 
 // built-in middleware for json
@@ -45,6 +45,7 @@ app.use('/api/tasks', tasksRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/vehicles', vehiclesRouter);
 
-app.listen(port, async () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+// run this only locally
+// app.listen(port, async () => {
+//     console.log(`[server]: Server is running at http://localhost:${port}`);
+// });
