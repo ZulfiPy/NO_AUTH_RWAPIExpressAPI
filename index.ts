@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server; RW-Rent API developed by Zulfugar A.');
+    res.send('Express + TypeScript Server; RW-Rent API developed by Zulfugar A. LinkedIn: https://www.linkedin.com/in/zulfugar-abdullayev-310b8b274/');
 });
 
 // built-in middleware for json
