@@ -1,3 +1,3 @@
-const allowedOrigins = ['http://localhost:3000', 'http://g0ggw0g.167.71.45.32.sslip.io'];
+const allowedOrigins = ['http://localhost:3000', 'http://ao0g8gw.139.59.210.80.sslip.io', 'systems.rwrent.dev', 'sys.rwrent.ee'];
 
 export { allowedOrigins }
