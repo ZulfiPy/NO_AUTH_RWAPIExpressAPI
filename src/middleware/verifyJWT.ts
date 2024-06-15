@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
     const cookies = req?.cookies;
+    res.cookie('lolKakTak', 'nu tak i tak', { httpOnly: true, sameSite: 'none', secure: true });
     console.log('here I am with the cookies', cookies)
     if (!cookies['next-auth.session-token']) {
         console.log('i return 401')
