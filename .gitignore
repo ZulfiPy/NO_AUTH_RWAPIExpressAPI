@@ -4,3 +4,4 @@ certs
 .gcloudignore
 app.yaml
 .DS_Store
+dist
