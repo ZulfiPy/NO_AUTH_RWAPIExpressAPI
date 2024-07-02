@@ -1,0 +1,9 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: no_auth_express_rw_api:prod
+    ports:
+    - 3500:3500

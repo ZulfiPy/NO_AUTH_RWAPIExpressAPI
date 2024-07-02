@@ -1,0 +1,12 @@
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    image: no_auth_express_rw_api:dev
+    volumes:
+    - ./:/app
+    - /app/node_modules
+    ports:
+    - 3500:3500
+    command: npm run dev
