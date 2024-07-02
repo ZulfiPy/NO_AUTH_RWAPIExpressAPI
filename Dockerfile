@@ -29,8 +29,8 @@ ENV NODE_ENV production
 
 COPY package*.json .
 
-RUN --mount=type=cache,target=/usr/src/app/.npm \
-    npm set cache /usr/src/app/.npm && \
+RUN --mount=type=cache,target=/app/.npm \
+    npm set cache /app/.npm && \
     npm ci --only=production
 
 # Copy the build output from the build stage
