@@ -36,14 +36,10 @@ app.use(express.json());
 // middleware for parsin cookies
 app.use(cookieParser());
 
-// jwt verify middleware
-app.use(verifyJWT);
-
-// routes
-// API routes protected with passport.js authentication and isAuthorized custom middleware
-app.use('/api/tasks', tasksRouter);
-app.use('/api/customers', customersRouter);
-app.use('/api/vehicles', vehiclesRouter);
+// API routes protected with verifyJWT middleware
+app.use('/api/tasks', verifyJWT, tasksRouter);
+app.use('/api/customers', verifyJWT, customersRouter);
+app.use('/api/vehicles', verifyJWT, vehiclesRouter);
 
 app.listen(port, async () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
