@@ -4,7 +4,6 @@ import cors from "cors";
 import { corsOptions } from "./src/config/corsOptions";
 import { credentials } from "./src/middleware/credentials";
 import cookieParser from "cookie-parser";
-import verifyJWT from "./src/middleware/verifyJWT";
 
 import tasksRouter from "./src/routes/api/tasks";
 import customersRouter from "./src/routes/api/customers";
@@ -37,9 +36,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // API routes protected with verifyJWT middleware
-app.use('/api/tasks', verifyJWT, tasksRouter);
-app.use('/api/customers', verifyJWT, customersRouter);
-app.use('/api/vehicles', verifyJWT, vehiclesRouter);
+app.use('/api/tasks', tasksRouter);
+app.use('/api/customers', customersRouter);
+app.use('/api/vehicles', vehiclesRouter);
 
 app.listen(port, async () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
