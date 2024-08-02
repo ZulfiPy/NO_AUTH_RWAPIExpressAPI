@@ -1,32 +1,22 @@
 import { Request, Response } from "express";
 import pgConn from "../config/supabasePGDbConn";
 import { getPool } from "../config/supabasePGDbConn";
-import jwt from "jsonwebtoken";
 
 const getTasks = async (req: Request, res: Response) => {
     const database = process.env.SUPABASE_PG_DB as string;
+    const username = req.username
     await pgConn(database);
 
-    const decoded = jwt.decode(req?.cookies['next-auth.session-token']);
+    try {
+        const pool = getPool(database);
 
-    if (typeof decoded === 'object' && decoded !== null && 'user' in decoded) {
+        const tasks = await pool.query('SELECT * FROM tasks WHERE created_by = ($1);', [username]);
 
-        const userInfo = decoded.user;
-        const username = userInfo?.username;
-
-        try {
-            const pool = getPool(database);
-
-            const tasks = await pool.query('SELECT * FROM tasks WHERE created_by = ($1);', [username]);
-
-            return res.status(200).json({ "tasks": tasks.rowCount === 0 ? 0 : tasks.rows });
-        } catch (error) {
-            console.log('error occurred while reading tasks:', error);
-            return res.status(500).json(error);
-        }
+        return res.status(200).json({ "tasks": tasks.rowCount === 0 ? 0 : tasks.rows });
+    } catch (error) {
+        console.log('error occurred while reading tasks:', error);
+        return res.status(500).json(error);
     }
-
-    return res.status(401).json({ 'message': 'provide session token' })
 }
 
 const getTasksByUsername = async (req: Request, res: Response) => {
