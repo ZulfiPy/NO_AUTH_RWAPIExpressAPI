@@ -4,6 +4,7 @@ import cors from "cors";
 import { corsOptions } from "./src/config/corsOptions";
 import { credentials } from "./src/middleware/credentials";
 import cookieParser from "cookie-parser";
+import verifySession from "./src/middleware/verifySession";
 
 import tasksRouter from "./src/routes/api/tasks";
 import customersRouter from "./src/routes/api/customers";
@@ -34,6 +35,8 @@ app.use(express.json());
 
 // middleware for parsin cookies
 app.use(cookieParser());
+
+app.use(verifySession);
 
 // API routes protected with verifyJWT middleware
 app.use('/api/tasks', tasksRouter);
